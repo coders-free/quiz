@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 
-    $topics = \App\Models\Topic::all();
+    $topics = \App\Models\Topic::whereHas('questions')
+                    ->get();
 
     return view('welcome', compact('topics'));
 })->name('welcome');

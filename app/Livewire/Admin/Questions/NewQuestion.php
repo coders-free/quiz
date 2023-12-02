@@ -45,6 +45,7 @@ class NewQuestion extends Component
 
     public function save()
     {
+
         $this->validate([
             'topic_id' => 'required|exists:topics,id',
             'options.*.name' => 'required',
@@ -57,6 +58,12 @@ class NewQuestion extends Component
             'topic_id' => $this->topic_id,
             'name' => $this->name,
             'options' => $this->options,
+        ]);
+
+        $this->dispatch('swal', [
+            'icon' => 'success',
+            'title' => '¡Pregunta creada!',
+            'text' => 'La pregunta se ha creado correctamente.',
         ]);
 
         $this->reset(['name', 'options']);

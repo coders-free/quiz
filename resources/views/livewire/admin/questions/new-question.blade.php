@@ -4,7 +4,7 @@
         <div class="fila">
             <label for="">Tema: </label>
 
-            <select name="tema" id="tema">
+            <select wire:model="topic_id" name="tema" id="tema">
 
                 @foreach ($topics as $topic)
                     <option value="{{$topic->id}}">
