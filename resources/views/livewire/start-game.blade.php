@@ -1,5 +1,30 @@
 <div>
 
+    @push('css')
+        
+        <style>
+            .tiempo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #fff;
+                text-shadow: 0 0 10px #000;
+                margin: 0.5rem 0;
+            }
+
+            .tiempo-numero {
+                font-size: 2rem;
+            }
+
+            .tiempo-texto {
+                font-size: 1rem;
+            }
+        </style>
+
+    @endpush
 
     <div>
         @if ($numPreguntaActual <= $totalPreguntasPorJuego)
@@ -10,6 +35,13 @@
                     <div class="categoria">
                         {{ $topic->name }}
                     </div>
+
+
+                    <div class="tiempo" wire:poll="temporizador">
+                        <span class="tiempo-numero">00:{{str_pad($tiempo, 2, '0', STR_PAD_LEFT)}}</span>
+                        <span class="tiempo-texto">Tiempo</span>
+                    </div>
+
                 </header>
 
                 <div class="info">
@@ -54,7 +86,7 @@
             totalPreguntasPorJuego: @entangle('totalPreguntasPorJuego'),
             numPreguntaActual: @entangle('numPreguntaActual'),
         }" 
-        class="container-final" 
+        class="container-final"
         id="container-final"
         x-show="numPreguntaActual > totalPreguntasPorJuego"
         wire:ignore>
@@ -72,10 +104,7 @@
             </div>
             <div class="score">
                 <div class="box">
-                    <div class="chart" 
-                        x-bind:data-percent="correctas * 100 / totalPreguntasPorJuego"
-                        x-text="(correctas * 100 / totalPreguntasPorJuego) + '%'">
-                    </div>
+                    <div class="chart"></div>
                     <h2>SCORE</h2>
                 </div>
             </div>
@@ -89,10 +118,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js" charset="utf-8"></script>
         
-
-        @push('js')
         <script>
             Livewire.on('resultado', () => {
+
+                percent = @this.correctas ? @this.correctas * 100 / @this.totalPreguntasPorJuego : 0;
+
+                $('.chart').attr('data-percent', percent);
+                $('.chart').append('<span>' + percent + '%</span>');
                 
                 $('.chart').easyPieChart({
                     size: 160,
@@ -106,8 +138,6 @@
 
             });
         </script>
-        @endpush
-
         
     @endpush
 

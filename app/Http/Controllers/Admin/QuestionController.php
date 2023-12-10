@@ -14,7 +14,11 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::with('topic')->get();
+        $questions = Question::with('topic')
+            ->when(request('topic_id'), function ($query, $topic_id) {
+                $query->where('topic_id', $topic_id);
+            })
+            ->get();
 
         return view('admin.questions.index', compact('questions'));
     }

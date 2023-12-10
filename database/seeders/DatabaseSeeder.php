@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'victor@codersfree.com',
             'age' => 31,
             'password' => bcrypt('12345678'),
+            'is_admin' => 1
         ]);
 
         $this->call([

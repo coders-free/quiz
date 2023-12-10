@@ -9,9 +9,11 @@
             <div class="contenedor-pregunta">
 
                 <header>
-                    <span class="tema">
+                    <a href="{{route('admin.questions.index', [
+                        'topic_id' => $question->topic_id,
+                    ])}}" class="tema">
                         {{ $question->topic->name }}
-                    </span>
+                    </a>
                     <div class="opciones" style="display: flex">
                         <a href="{{ route('admin.questions.edit', $question) }}">
                             <i class="fa-solid fa-pen-to-square"></i>

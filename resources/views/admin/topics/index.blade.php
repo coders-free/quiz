@@ -12,7 +12,9 @@
         </div>
 
         @foreach ($topics as $topic)
-            <div class="card gradiente1">
+            <a href="{{route('admin.questions.index', [
+                'topic_id' => $topic->id,
+            ])}}" class="card gradiente1">
                 <span class="tema">
                     {{ $topic->name }}
                 </span>
@@ -20,7 +22,7 @@
                     {{ $topic->questions_count }}
                 </span>
                 <span> Preguntas</span>
-            </div>
+            </a>
         @endforeach
     </div>
 

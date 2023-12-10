@@ -19,6 +19,8 @@ class StartGame extends Component
 
     public $question;
 
+    public $tiempo = 15;
+
     public function mount($topic)
     {
         $this->topic = $topic;
@@ -43,11 +45,26 @@ class StartGame extends Component
         $this->numPreguntaActual = $this->numPreguntaActual + 1;
         $this->respuestaActual = '';
 
+        $this->reset('tiempo');
 
         if ($this->numPreguntaActual <= $this->totalPreguntasPorJuego) {
             $this->question = $this->topic->questions[$this->numPreguntaActual - 1];
         }else{
             $this->dispatch('resultado');
+        }
+
+    }
+
+    public function temporizador()
+    {
+
+        if($this->numPreguntaActual <= $this->totalPreguntasPorJuego)
+        {
+            if ($this->tiempo == 0) {
+                $this->verify();
+            }else{
+                $this->tiempo = $this->tiempo - 1;
+            }
         }
 
     }
